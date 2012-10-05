@@ -17,6 +17,16 @@ def rsync(from_dir, to_dir, *args):
                               to_dir])
     return (result == 0)  # zero exit on success
 
+def delay():
+    # Wait 60 seconds
+    print "Sleeping for 60 seconds",
+    sys.stdout.flush()
+    for i in range(6):
+        time.sleep(10)
+        print "...%d" % (60 - ((i + 1) * 10)),
+        sys.stdout.flush()
+    print ""
+
 
 if __name__ == '__main__':
     while True:
@@ -32,6 +42,7 @@ if __name__ == '__main__':
         success = rsync(SSD_dir, Local_dir, "-q")
         if not success:
             print "Syncing SSD to Local sync failed.  Retrying, not removing anything."
+            delay()
             continue
 
         # Then, sync the SSD to the Remote
@@ -39,6 +50,7 @@ if __name__ == '__main__':
         success = rsync(SSD_dir, Remote_dir, "-q")
         if not success:
             print "Syncing SSD to Remote sync failed.  Retrying, not removing anything."
+            delay()
             continue
 
         # Then, resync the SSD to any finished directories, but use checksumming
@@ -57,11 +69,4 @@ if __name__ == '__main__':
                 except:
                     print "Could not remove finished directory %d" % (d)
 
-        # Wait 60 seconds
-        print "Sleeping for 60 seconds",
-        sys.stdout.flush()
-        for i in range(6):
-            time.sleep(10)
-            print "...%d" % (60 - ((i + 1) * 10)),
-            sys.stdout.flush()
-        print ""
+        delay()
