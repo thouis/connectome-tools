@@ -6,9 +6,9 @@ import shutil
 import time
 
 # include trailing slashes in paths
-SSD_dir = '/Users/thouis/SSD/'
-Local_dir = '/Users/thouis/LOCAL/'
-Remote_dir = '/Users/thouis/REMOTE/'
+SSD_dir = '/cygdrive/s/LGNS1_Montages/'
+Local_dir = '/cygdrive/f/LGNS1_Montages/'
+Remote_dir = '/cygdrive/x/joshm/LGNs1/rawMontages/'
 
 def rsync(from_dir, to_dir, *args):
     result = subprocess.call(["/usr/bin/rsync",
@@ -52,7 +52,8 @@ if __name__ == '__main__':
             else:
                 print "    Removing %s" % (d)
                 try:
-                    shutil.rmtree(d)
+                    # shutil.rmtree(d)
+                    print "Would remove %s" % d
                 except:
                     print "Could not remove finished directory %d" % (d)
 
