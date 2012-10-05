@@ -6,7 +6,7 @@ import shutil
 import time
 
 # include trailing slashes in paths
-SSD_dir = '/cygdrive/s/LGNS1_Montages/'
+SSD_dir = '/cygdrive/v/LGNS1_Montages/'
 Local_dir = '/cygdrive/f/LGNS1_Montages/'
 Remote_dir = '/cygdrive/x/joshm/LGNs1/rawMontages/'
 
