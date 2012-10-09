@@ -32,7 +32,7 @@ if __name__ == '__main__':
     while True:
         # Sync the Databuffer to the Remote
         print "Syncing %s to %s..." % (Local_dir, Remote_dir)
-        success = rsync(Local_dir, Remote_dir, "-q", "-W", "--progress", "-h")
+        success = rsync(Local_dir, Remote_dir, "-q", "-W", "--progress", "-h", "--exclude=.*")
         if not success:
             print "Syncing Local to Remote sync failed.  Retrying..."
 
