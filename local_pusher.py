@@ -49,14 +49,6 @@ if __name__ == '__main__':
             print "Will remove these directories after verifying checksums:"
             print "    ", "\n    ".join(finished_dirs)
 
-        # First, sync the SSD to the Local
-        print "Syncing %s to %s..." % (SSD_dir, Local_dir)
-        success = rsync(SSD_dir, Local_dir, "-q", "-W", "--progress", "-h")
-        if not success:
-            print "Syncing SSD to Local sync failed.  Retrying, not removing anything."
-            delay()
-            continue
-
         # Create md5 checksums for every .tif file in the finished directories
         for d in finished_dirs:
             write_md5s(d)
@@ -75,5 +67,11 @@ if __name__ == '__main__':
                     shutil.rmtree(d)
                 except:
                     print "Could not remove finished directory %d" % (d)
+
+        # sync the SSD to the Local
+        print "Syncing %s to %s..." % (SSD_dir, Local_dir)
+        success = rsync(SSD_dir, Local_dir, "-q", "-W", "--progress", "-h")
+        if not success:
+            print "Syncing SSD to Local sync failed.  Retrying."
 
         delay()
