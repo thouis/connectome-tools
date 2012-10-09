@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
         # First, sync the SSD to the Local
         print "Syncing %s to %s..." % (SSD_dir, Local_dir)
-        success = rsync(SSD_dir, Local_dir, "-q")
+        success = rsync(SSD_dir, Local_dir, "-q", "-W")
         if not success:
             print "Syncing SSD to Local sync failed.  Retrying, not removing anything."
             delay()
@@ -47,7 +47,7 @@ if __name__ == '__main__':
 
         # Then, sync the SSD to the Remote
         print "Syncing %s to %s..." % (SSD_dir, Remote_dir)
-        success = rsync(SSD_dir, Remote_dir, "-q")
+        success = rsync(SSD_dir, Remote_dir, "-q", "-W")
         if not success:
             print "Syncing SSD to Remote sync failed.  Retrying, not removing anything."
             delay()
@@ -56,9 +56,9 @@ if __name__ == '__main__':
         # Then, resync the SSD to any finished directories, but use checksumming
         # instead of size and modification time.
         for d in finished_dirs:
-            remote_subdir = os.path.join(Remote_dir, os.path.split(d)[1])
+            remote_subdir = os.path.join(Remote_dir, os.path.split(d)[1], '')
             "Checksum-based sync of %s to %s..." % (d, remote_subdir)
-            success = rsync(d, remote_subdir, "-c", "-vv")
+            success = rsync(os.path.join(d, ''), remote_subdir, "-c", "-vv")
             if not success:
                 print "    Sync failed, not removing %s" % (d)
             else:
