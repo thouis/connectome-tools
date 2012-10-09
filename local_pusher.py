@@ -20,9 +20,11 @@ def rsync(from_dir, to_dir, *args):
 def write_md5s(path):
     try:
         tif_files = glob.glob(os.path.join(path, "*.tif"))
-        result = subprocess.check_output(["/usr/bin/md5sum"] + tif_files)
+        md5subproc = subprocess.Popen(["/usr/bin/md5sum"] + tif_files,
+                                      stdout=subprocess.PIPE)
+        stdout, stderr = md5subproc.communicate()
         f = open(os.path.join(path, "MD5_CHECKSUMS.txt"), "w")
-        f.write(result)
+        f.write(stdout)
         f.close()
     except Exception, e:
         print "Could not write MD5 checksums", e
@@ -71,7 +73,6 @@ if __name__ == '__main__':
                 print "    Removing %s" % (d)
                 try:
                     shutil.rmtree(d)
-                    print "Would remove %s" % d
                 except:
                     print "Could not remove finished directory %d" % (d)
 
