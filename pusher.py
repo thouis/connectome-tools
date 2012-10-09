@@ -12,7 +12,7 @@ Remote_dir = '/cygdrive/x/joshm/LGNs1/rawMontages/'
 
 def rsync(from_dir, to_dir, *args):
     result = subprocess.call(["/usr/bin/rsync",
-                              "-a",] + list(args) +
+                              "-a", "--no-perms"] + list(args) +
                              [from_dir,
                               to_dir])
     return (result == 0)  # zero exit on success
