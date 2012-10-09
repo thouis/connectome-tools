@@ -57,8 +57,7 @@ if __name__ == '__main__':
         # instead of size and modification time.
         for d in finished_dirs:
             databuffer_subdir = os.path.join(Local_dir, os.path.split(d)[1], '')
-            "Checksum-based sync of %s to %s..." % (d, databuffer_subdir)
-            success = rsync(os.path.join(d, ''), databuffer_subdir, "-c", "-vv")
+            success = rsync(os.path.join(d, ''), databuffer_subdir, "-W", "--progress", "-h")
             if not success:
                 print "    Sync failed, not removing %s" % (d)
             else:
