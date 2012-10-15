@@ -44,11 +44,13 @@ def duplicate_dir(src, dest):
                 if ((sourcefile_size != filesize(destfile)) or
                     newer(sourcefile, destfile)):
                     t1 = time.time()
+                    print "Copying %s" % sourcefile,
+                    sys.stdout.flush()
                     dup_file(sourcefile, destfile)
                     dt = time.time() - t1
                     bandwidth = (sourcefile_size / dt) / (1024 * 1024)
-                    print "Copied %s, %0.02f MB in %d sec, %0.02f MB/s" % \
-                        (sourcefile, sourcefile_size / (1024.0 * 1024), dt, bandwidth)
+                    print ", %0.02f MB in %d sec, %0.02f MB/s" % \
+                        (sourcefile_size / (1024.0 * 1024), dt, bandwidth)
             # note that this directory can be deleted
             if 'finished.mat' in files:
                 yield os.path.join(oldpath, src, dirpath)
