@@ -57,7 +57,7 @@ if __name__ == '__main__':
         # instead of size and modification time.
         for d in finished_dirs:
             databuffer_subdir = os.path.join(Local_dir, os.path.split(d)[1], '')
-            success = rsync(os.path.join(d, ''), databuffer_subdir, "-W", "--progress", "-h")
+            success = rsync(os.path.join(d, ''), databuffer_subdir, "-v", "-W", "--progress", "-h")
             if not success:
                 print "    Sync failed, not removing %s" % (d)
             else:
@@ -69,7 +69,7 @@ if __name__ == '__main__':
 
         # sync the SSD to the Local
         print "Syncing %s to %s..." % (SSD_dir, Local_dir)
-        success = rsync(SSD_dir, Local_dir, "-q", "-W", "--progress", "-h")
+        success = rsync(SSD_dir, Local_dir, "-v", "-W", "--progress", "-h")
         if not success:
             print "Syncing SSD to Local sync failed.  Retrying."
 
