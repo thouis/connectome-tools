@@ -12,7 +12,7 @@ Remote_dir = '/cygdrive/z/joshm/LGNs1/rawMontages/'
 
 def rsync(from_dir, to_dir, *args):
     result = subprocess.call(["/usr/bin/rsync",
-                              "-a", "--chmod=Dg+rwx,Fg+rw"] + list(args) +
+                              "-a", "--chmod=Dgo+rwx,Fgo+rw"] + list(args) +
                              [from_dir,
                               to_dir])
     # subprocess.call("setfacl -m o::r-x".split(' ') + [to_dir])
