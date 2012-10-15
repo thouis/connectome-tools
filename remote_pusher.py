@@ -12,9 +12,10 @@ Remote_dir = '/cygdrive/x/joshm/LGNs1/rawMontages/'
 
 def rsync(from_dir, to_dir, *args):
     result = subprocess.call(["/usr/bin/rsync",
-                              "-a", "--no-perms"] + list(args) +
+                              "-a", "--chmod=Do+rx,Fo+r"] + list(args) +
                              [from_dir,
                               to_dir])
+    # subprocess.call("setfacl -m o::r-x".split(' ') + [to_dir])
     return (result == 0)  # zero exit on success
 
 def delay():
@@ -33,7 +34,7 @@ if __name__ == '__main__':
         # Sync the Databuffer to the Remote
         print "Syncing %s to %s..." % (Local_dir, Remote_dir)
         success = rsync(Local_dir, Remote_dir, "-v", "-W", "--progress", "-h",
-                        "--exclude=.*", "--chmod=ugo=rwX")
+                        "--exclude=.*")
         if not success:
             print "Syncing Local to Remote sync failed.  Retrying..."
 
