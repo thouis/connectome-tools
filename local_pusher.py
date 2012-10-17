@@ -49,15 +49,13 @@ if __name__ == '__main__':
             print "Will remove these directories after verifying checksums:"
             print "    ", "\n    ".join(finished_dirs)
 
-        # Create md5 checksums for every .tif file in the finished directories
-        for d in finished_dirs:
-            write_md5s(d)
-
         # Then, resync the SSD to any finished directories, but use checksumming
         # instead of size and modification time.
         for d in finished_dirs:
             databuffer_subdir = os.path.join(Local_dir, os.path.split(d)[1], '')
             success = rsync(os.path.join(d, ''), databuffer_subdir, "-v", "-W", "--progress", "-h")
+            # Create md5 checksums for every .tif file in the finished directories
+            write_md5s(databuffer_subdir)
             if not success:
                 print "    Sync failed, not removing %s" % (d)
             else:
